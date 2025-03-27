@@ -1,43 +1,41 @@
 
-import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
 
 const CTA = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const navigate = useNavigate();
 
+  const handleBookDemo = () => {
+    navigate('/book-demo');
+  };
+  
   return (
-    <section 
-      ref={ref}
-      className="py-20 bg-gradient-to-r from-coveo-darkBlue to-coveo-blue text-white"
-      id="cta"
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className={`max-w-3xl mx-auto text-center transition-all duration-700 ${inView ? 'opacity-100 animate-scale-up' : 'opacity-0'}`}>
-          <span className="inline-block mb-4 px-4 py-1.5 bg-white/10 text-white text-sm font-medium rounded-full backdrop-blur-sm">
-            Get Started Today
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Digital Experiences?</h2>
-          <p className="text-lg text-white/80 mb-8">
-            Join thousands of leading organizations using Coveo to deliver relevant experiences that drive business results.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="btn-hover bg-white text-coveo-blue hover:bg-white/90">
-              Start Free Trial
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="lg" className="btn-hover border-white text-white hover:bg-white/10">
-              Contact Sales
-            </Button>
-          </div>
-          
-          <p className="mt-6 text-sm text-white/60">
-            No credit card required. Get up and running in minutes.
-          </p>
+    <section className="bg-coveo-purple py-24">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          Transform Your Digital Experience Today
+        </h2>
+        <p className="text-lg text-white/80 max-w-2xl mx-auto mb-10">
+          Join the thousands of companies using Coveo to deliver 
+          exceptional search experiences and drive meaningful business results.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Button 
+            onClick={handleBookDemo}
+            size="lg" 
+            className="bg-white text-coveo-purple hover:bg-white/90 font-medium px-6"
+          >
+            Book a Demo
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-white text-white hover:bg-white/10 font-medium px-6"
+          >
+            Contact Sales
+          </Button>
         </div>
       </div>
     </section>
