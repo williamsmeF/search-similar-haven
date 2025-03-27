@@ -10,6 +10,9 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import BookDemo from "./pages/BookDemo";
 import BookingConfirmation from "./pages/BookingConfirmation";
+import MyBookings from "./pages/MyBookings";
+import Team from "./pages/Team";
+import Settings from "./pages/Settings";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/book-demo" element={<BookDemo />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/resources" element={<Resources />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
