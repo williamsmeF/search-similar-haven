@@ -34,7 +34,7 @@ const Login = () => {
   const onSubmit = (data: LoginFormValues) => {
     // For demo purposes, we're just going to simulate a successful login
     toast.success("Successfully logged in!");
-    navigate("/dashboard");
+    navigate("/profile");
   };
 
   return (

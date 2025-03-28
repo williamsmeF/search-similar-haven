@@ -42,7 +42,7 @@ const Signup = () => {
   const onSubmit = (data: SignupFormValues) => {
     // For demo purposes, we're just going to simulate a successful signup
     toast.success("Account created successfully!");
-    navigate("/dashboard");
+    navigate("/profile");
   };
 
   return (

@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import UserProfile from "./pages/UserProfile";
 import BookDemo from "./pages/BookDemo";
 import BookingConfirmation from "./pages/BookingConfirmation";
 import MyBookings from "./pages/MyBookings";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/book-demo" element={<BookDemo />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/my-bookings" element={<MyBookings />} />
