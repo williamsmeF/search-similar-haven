@@ -40,10 +40,11 @@ const Navbar = () => {
                 Products <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               <div className="absolute left-0 mt-2 w-64 rounded-lg p-2 bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">Search</Link>
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">Service</Link>
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">Commerce</Link>
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">Platform</Link>
+                <Link to="/products" className="block p-3 rounded-md hover:bg-muted transition-colors">All Products</Link>
+                <Link to="/products#search" className="block p-3 rounded-md hover:bg-muted transition-colors">Search</Link>
+                <Link to="/products#service" className="block p-3 rounded-md hover:bg-muted transition-colors">Service</Link>
+                <Link to="/products#commerce" className="block p-3 rounded-md hover:bg-muted transition-colors">Commerce</Link>
+                <Link to="/products#platform" className="block p-3 rounded-md hover:bg-muted transition-colors">Platform</Link>
               </div>
             </div>
             <div className="relative group">
@@ -51,14 +52,26 @@ const Navbar = () => {
                 Solutions <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               <div className="absolute left-0 mt-2 w-64 rounded-lg p-2 bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">By Industry</Link>
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">By Role</Link>
-                <Link to="#" className="block p-3 rounded-md hover:bg-muted transition-colors">By Use Case</Link>
+                <Link to="/solutions" className="block p-3 rounded-md hover:bg-muted transition-colors">By Industry</Link>
+                <Link to="/solutions#retail" className="block p-3 rounded-md hover:bg-muted transition-colors">Retail</Link>
+                <Link to="/solutions#financial" className="block p-3 rounded-md hover:bg-muted transition-colors">Financial Services</Link>
+                <Link to="/solutions#technology" className="block p-3 rounded-md hover:bg-muted transition-colors">Technology</Link>
+                <Link to="/solutions#healthcare" className="block p-3 rounded-md hover:bg-muted transition-colors">Healthcare</Link>
               </div>
             </div>
             <Link to="/resources" className="text-foreground hover:text-coveo-blue transition-colors">Resources</Link>
-            <Link to="#" className="text-foreground hover:text-coveo-blue transition-colors">Pricing</Link>
-            <Link to="#" className="text-foreground hover:text-coveo-blue transition-colors">Company</Link>
+            <Link to="/pricing" className="text-foreground hover:text-coveo-blue transition-colors">Pricing</Link>
+            <div className="relative group">
+              <button className="flex items-center text-foreground hover:text-coveo-blue transition-colors">
+                Company <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              <div className="absolute left-0 mt-2 w-64 rounded-lg p-2 bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <Link to="/company" className="block p-3 rounded-md hover:bg-muted transition-colors">About Us</Link>
+                <Link to="/company#leadership" className="block p-3 rounded-md hover:bg-muted transition-colors">Leadership</Link>
+                <Link to="/company#careers" className="block p-3 rounded-md hover:bg-muted transition-colors">Careers</Link>
+                <Link to="/company#locations" className="block p-3 rounded-md hover:bg-muted transition-colors">Locations</Link>
+              </div>
+            </div>
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -76,11 +89,11 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       <div className={`md:hidden absolute w-full bg-white transition-all duration-300 shadow-md overflow-hidden ${isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="px-4 py-2">
-          <Link to="#" className="block py-3 border-b">Products</Link>
-          <Link to="#" className="block py-3 border-b">Solutions</Link>
+          <Link to="/products" className="block py-3 border-b">Products</Link>
+          <Link to="/solutions" className="block py-3 border-b">Solutions</Link>
           <Link to="/resources" className="block py-3 border-b">Resources</Link>
-          <Link to="#" className="block py-3 border-b">Pricing</Link>
-          <Link to="#" className="block py-3 border-b">Company</Link>
+          <Link to="/pricing" className="block py-3 border-b">Pricing</Link>
+          <Link to="/company" className="block py-3 border-b">Company</Link>
           <div className="flex flex-col space-y-3 py-4">
             <Button variant="outline" onClick={() => navigate("/login")}>Login</Button>
             <Button className="bg-coveo-blue hover:bg-coveo-blue/90" onClick={() => navigate("/signup")}>Get Started</Button>
