@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { User, Mail, Building, MapPin, Phone, Save, Settings, LogOut } from "lucide-react";
+import { User, Mail, Building, MapPin, Phone, Save, Settings, LogOut, Github, Database } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -140,6 +140,24 @@ const UserProfile = () => {
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start"
+                  onClick={() => window.open("https://github.com", "_blank")}
+                >
+                  <Github className="h-4 w-4 mr-2" />
+                  Connect GitHub
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start"
+                  onClick={() => window.open("https://supabase.com", "_blank")}
+                >
+                  <Database className="h-4 w-4 mr-2" />
+                  Connect Supabase
                 </Button>
               </div>
             </CardContent>
