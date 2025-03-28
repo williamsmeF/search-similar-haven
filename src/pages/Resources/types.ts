@@ -7,7 +7,7 @@ export interface Resource {
   type: ResourceType;
   category: ResourceCategory;
   description: string;
-  icon: LucideIcon;
+  icon: string;  // Changed from LucideIcon to string
   link: string;
   downloadable?: boolean;
   featured?: boolean;
