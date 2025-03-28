@@ -34,13 +34,13 @@ const ResourceHeader = ({
   return (
     <div className="mb-12">
       <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">Resources</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-md">Resources</h1>
+        <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
           Explore our collection of guides, tutorials, and case studies to help you get the most out of Coveo.
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-4 rounded-lg shadow-md">
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
@@ -55,7 +55,7 @@ const ResourceHeader = ({
           <div className="dropdown-container relative group">
             <Button 
               variant="outline" 
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 bg-white"
             >
               <Filter className="h-4 w-4" />
               Category: {selectedCategory}
@@ -78,7 +78,7 @@ const ResourceHeader = ({
           <div className="dropdown-container relative group">
             <Button 
               variant="outline" 
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 bg-white"
             >
               <Filter className="h-4 w-4" />
               Type: {selectedType}
