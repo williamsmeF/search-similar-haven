@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Resource } from "../types";
+import { Resource, resourceTypeIcons } from "../types";
 import { FileText, Video, Book, Download, ExternalLink } from "lucide-react";
 
 interface ResourceCardProps {
