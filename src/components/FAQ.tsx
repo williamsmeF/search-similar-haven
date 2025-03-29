@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import SectionHeader from './ui/section-header';
+import { Search } from 'lucide-react';
 
 const faqData = [
   {
@@ -32,6 +34,8 @@ const faqData = [
 ];
 
 const FAQ = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFAQs, setFilteredFAQs] = useState(faqData);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -46,6 +50,19 @@ const FAQ = () => {
     }
   }, [inView]);
 
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredFAQs(faqData);
+      return;
+    }
+    
+    const filtered = faqData.filter(item => 
+      item.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredFAQs(filtered);
+  }, [searchTerm]);
+
   return (
     <section 
       ref={ref}
@@ -57,25 +74,45 @@ const FAQ = () => {
       <div className="absolute bottom-0 left-1/4 h-64 w-64 -z-10 bg-coveo-purple/5 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4 md:px-6">
-        <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${animate ? 'opacity-100' : 'opacity-0'}`}>
-          <span className="inline-block mb-4 px-4 py-1.5 bg-coveo-gray text-coveo-blue text-sm font-medium rounded-full">
-            Common Questions
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Frequently Asked Questions</h2>
-          <p className="text-lg text-muted-foreground">
-            Get answers to the most common questions about our platform and services.
-          </p>
+        <SectionHeader
+          badge="Common Questions"
+          title="Frequently Asked Questions"
+          subtitle="Get answers to the most common questions about our platform and services."
+          className={`transition-all duration-700 ${animate ? 'opacity-100' : 'opacity-0'}`}
+        />
+
+        <div className={`max-w-3xl mx-auto mb-8 transition-all duration-700 delay-200 ${animate ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search for answers..."
+              className="w-full pl-10 pr-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-coveo-blue"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className={`max-w-3xl mx-auto transition-all duration-700 delay-300 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <Accordion type="single" collapsible className="w-full">
-            {faqData.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-b border-muted">
-                <AccordionTrigger className="text-lg font-medium py-5">{item.question}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">{item.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {filteredFAQs.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">No FAQs match your search. Try different keywords.</p>
+            </div>
+          ) : (
+            <Accordion type="single" collapsible className="w-full">
+              {filteredFAQs.map((item, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`} 
+                  className="border-b border-muted"
+                >
+                  <AccordionTrigger className="text-lg font-medium py-5">{item.question}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          )}
         </div>
       </div>
     </section>
