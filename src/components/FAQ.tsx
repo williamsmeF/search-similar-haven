@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   Accordion,
@@ -38,7 +38,7 @@ const FAQ = () => {
   });
   const [animate, setAnimate] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
     if (inView) {
       setTimeout(() => {
         setAnimate(true);
