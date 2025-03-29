@@ -116,3 +116,15 @@ export const resources: Resource[] = [
     link: "#",
   },
 ];
+
+// Extract unique categories and types from resources for filtering
+export const resourceCategories = Array.from(
+  new Set(resources.map((resource) => resource.category))
+) as Array<Resource["category"]>;
+
+export const resourceTypes = Array.from(
+  new Set(resources.map((resource) => resource.type))
+) as Array<Resource["type"]>;
+
+// Export resources as resourcesData to match the import in index.tsx
+export const resourcesData = resources;
