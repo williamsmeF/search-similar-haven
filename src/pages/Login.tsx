@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,8 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageContainer from "@/components/ui/page-container";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -38,9 +36,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-coveo-lightGray">
+    <PageContainer>
+      <div className="flex items-center justify-center">
         <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-md">
           <div className="text-center">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
@@ -136,8 +133,7 @@ const Login = () => {
           </Form>
         </div>
       </div>
-      <Footer />
-    </div>
+    </PageContainer>
   );
 };
 

@@ -1,7 +1,5 @@
-
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageContainer from "@/components/ui/page-container";
 import ResourceHeader from "./components/ResourceHeader";
 import ResourceGrid from "./components/ResourceGrid";
 import FeaturedResources from "./components/FeaturedResources";
@@ -42,10 +40,8 @@ const Resources = () => {
   const filteredResources = filterResources();
   
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-[#30e8bf] to-[#ff8235]">
-      <Navbar />
-      
-      <main className="flex-grow py-24">
+    <PageContainer fullWidth>
+      <div className="py-24">
         <div className="container mx-auto px-4 md:px-6">
           <ResourceHeader 
             onSearch={handleSearch}
@@ -65,11 +61,10 @@ const Resources = () => {
             />
           </div>
         </div>
-      </main>
+      </div>
       
       <CTA />
-      <Footer />
-    </div>
+    </PageContainer>
   );
 };
 

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,9 +7,9 @@ import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageContainer from "@/components/ui/page-container";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -46,9 +45,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-coveo-lightGray">
+    <PageContainer>
+      <div className="flex items-center justify-center">
         <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-md">
           <div className="text-center">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
@@ -182,8 +180,7 @@ const Signup = () => {
           </Form>
         </div>
       </div>
-      <Footer />
-    </div>
+    </PageContainer>
   );
 };
 

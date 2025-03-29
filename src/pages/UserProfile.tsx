@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageContainer from "@/components/ui/page-container";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -32,7 +32,6 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   
-  // In a real app, this would come from your auth context or API
   const [userProfile, setUserProfile] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -58,7 +57,6 @@ const UserProfile = () => {
   });
 
   const onSubmit = (data: ProfileFormValues) => {
-    // In a real app, you would send this data to your API
     setUserProfile({
       ...userProfile,
       ...data,
@@ -69,9 +67,8 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 container mx-auto px-4 py-16">
+    <PageContainer>
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
         <div className="mb-12">
           <h1 className="text-3xl font-bold mb-2">Your Profile</h1>
           <p className="text-muted-foreground">
@@ -80,7 +77,6 @@ const UserProfile = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Profile Summary Card */}
           <Card className="md:col-span-1">
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
@@ -163,7 +159,6 @@ const UserProfile = () => {
             </CardContent>
           </Card>
 
-          {/* Profile Form */}
           <div className="md:col-span-2">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
@@ -348,8 +343,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </PageContainer>
   );
 };
 
