@@ -20,7 +20,7 @@ const PageContainer = ({ children, fullWidth = false }: PageContainerProps) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-[#D3E4FD]">
       <Navbar />
       <main 
         className={`flex-grow ${!fullWidth && 'container mx-auto px-4 py-24'} 
