@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import PageContainer from "@/components/ui/page-container";
 import CTA from "@/components/CTA";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
@@ -14,7 +15,9 @@ import {
   CarouselNext,
   CarouselPrevious
 } from "@/components/ui/carousel";
-import { useNavigate } from 'react-router-dom';
+import ProductDetail from "@/components/ProductDetail";
+import SectionHeader from "@/components/ui/section-header";
+import { useEffect } from "react";
 
 interface ProductCardProps {
   icon: React.ReactNode;
@@ -24,6 +27,7 @@ interface ProductCardProps {
   price: string;
   cta?: string;
   useCase?: string;
+  productId: string;
 }
 
 const ProductCard = ({ 
@@ -33,9 +37,19 @@ const ProductCard = ({
   features, 
   price, 
   cta = "Learn More",
-  useCase 
+  useCase,
+  productId
 }: ProductCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleLearnMore = () => {
+    // Scroll to the product detail section
+    const element = document.getElementById(productId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <Card className="transition-all duration-300 hover:shadow-lg animate-fade-in">
@@ -78,7 +92,7 @@ const ProductCard = ({
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" onClick={handleLearnMore}>
           {cta} <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </CardFooter>
@@ -139,6 +153,23 @@ const ComparisonTable = ({ products }: ComparisonTableProps) => {
 
 const ProductShowcase = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("products");
+  
+  useEffect(() => {
+    // Check if there's a hash in the URL
+    if (location.hash) {
+      setActiveTab("products");
+      
+      // Allow time for the products tab to render
+      setTimeout(() => {
+        const element = document.getElementById(location.hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    }
+  }, [location]);
   
   const handlePricingClick = () => {
     navigate('/pricing');
@@ -155,7 +186,15 @@ const ProductShowcase = () => {
       "Analytics and insights"
     ],
     price: "From $99/mo",
-    useCase: "A leading e-commerce company implemented Coveo Search and saw a 25% increase in conversion rates and 15% higher average order value due to more relevant search results."
+    useCase: "A leading e-commerce company implemented Coveo Search and saw a 25% increase in conversion rates and 15% higher average order value due to more relevant search results.",
+    benefits: [
+      "Increase user satisfaction with relevant search results",
+      "Reduce bounce rates with engaging search experiences",
+      "Drive conversions with personalized recommendations",
+      "Gain insights into user behavior and preferences",
+      "Enhance discoverability of your content and products"
+    ],
+    productId: "search"
   };
 
   const serviceProduct = {
@@ -169,7 +208,15 @@ const ProductShowcase = () => {
       "Self-service portals"
     ],
     price: "From $199/mo",
-    useCase: "A global telecommunications provider reduced support costs by 30% after implementing Coveo's self-service solutions, while improving customer satisfaction scores by 40%."
+    useCase: "A global telecommunications provider reduced support costs by 30% after implementing Coveo's self-service solutions, while improving customer satisfaction scores by 40%.",
+    benefits: [
+      "Reduce support costs with effective self-service",
+      "Increase first-call resolution rates",
+      "Enhance agent productivity with AI assistance",
+      "Improve customer satisfaction scores",
+      "Streamline knowledge management processes"
+    ],
+    productId: "service"
   };
 
   const commerceProduct = {
@@ -183,7 +230,15 @@ const ProductShowcase = () => {
       "Conversion optimization"
     ],
     price: "From $299/mo",
-    useCase: "A fashion retailer implemented Coveo Commerce and experienced a 35% increase in average basket size through AI-powered product recommendations tailored to each shopper."
+    useCase: "A fashion retailer implemented Coveo Commerce and experienced a 35% increase in average basket size through AI-powered product recommendations tailored to each shopper.",
+    benefits: [
+      "Increase average order value with tailored recommendations",
+      "Enhance the shopping experience with personalization",
+      "Boost conversion rates with relevant product displays",
+      "Drive repeat purchases through intelligent cross-selling",
+      "Optimize merchandising strategies with AI-driven insights"
+    ],
+    productId: "commerce"
   };
 
   const platformProduct = {
@@ -197,7 +252,15 @@ const ProductShowcase = () => {
       "Security and compliance"
     ],
     price: "Custom pricing",
-    useCase: "A Fortune 500 company consolidated multiple search and recommendation systems onto Coveo's platform, saving $2M annually in operational costs while improving user experiences across all digital properties."
+    useCase: "A Fortune 500 company consolidated multiple search and recommendation systems onto Coveo's platform, saving $2M annually in operational costs while improving user experiences across all digital properties.",
+    benefits: [
+      "Consolidate multiple systems into one unified platform",
+      "Create consistent experiences across all digital touchpoints",
+      "Scale effortlessly with cloud-native architecture",
+      "Ensure enterprise-grade security and compliance",
+      "Integrate seamlessly with your existing technology stack"
+    ],
+    productId: "platform"
   };
 
   const products = [searchProduct, serviceProduct, commerceProduct, platformProduct];
@@ -258,87 +321,124 @@ const ProductShowcase = () => {
   ];
 
   return (
-    <Tabs defaultValue="products" className="w-full">
-      <TabsList className="w-full max-w-md mx-auto mb-8 grid grid-cols-3 h-auto bg-white/20 backdrop-blur-sm">
-        <TabsTrigger value="products" className="py-3">Products</TabsTrigger>
-        <TabsTrigger value="compare" className="py-3">Compare</TabsTrigger>
-        <TabsTrigger value="showcase" className="py-3">Showcase</TabsTrigger>
-      </TabsList>
-      
-      <TabsContent value="products" className="space-y-6 animate-fade-in">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              icon={product.icon}
-              title={product.title}
-              description={product.description}
-              features={product.features}
-              price={product.price}
-              useCase={product.useCase}
+    <>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="w-full max-w-md mx-auto mb-8 grid grid-cols-3 h-auto bg-white/20 backdrop-blur-sm">
+          <TabsTrigger value="products" className="py-3">Products</TabsTrigger>
+          <TabsTrigger value="compare" className="py-3">Compare</TabsTrigger>
+          <TabsTrigger value="showcase" className="py-3">Showcase</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="products" className="space-y-6 animate-fade-in">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {products.map((product, index) => (
+              <ProductCard
+                key={index}
+                icon={product.icon}
+                title={product.title}
+                description={product.description}
+                features={product.features}
+                price={product.price}
+                useCase={product.useCase}
+                productId={product.productId}
+              />
+            ))}
+          </div>
+          
+          <div className="mt-16 border-t pt-12">
+            <SectionHeader 
+              title="Product Details"
+              subtitle="Learn more about each of our AI-powered solutions"
+              align="center"
             />
-          ))}
-        </div>
-      </TabsContent>
-      
-      <TabsContent value="compare" className="animate-fade-in">
-        <Card>
-          <CardHeader>
-            <CardTitle>Product Comparison</CardTitle>
-            <CardDescription>
-              Compare features across our product offerings to find the right solution for your needs.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ComparisonTable products={comparisonData} />
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button onClick={handlePricingClick} className="bg-coveo-blue hover:bg-coveo-blue/90">
-              View Pricing
-            </Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-      
-      <TabsContent value="showcase" className="animate-fade-in py-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Product Showcase</CardTitle>
-            <CardDescription>
-              Explore our products through interactive demos and case studies.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Carousel className="w-full">
-              <CarouselContent>
-                {products.map((product, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1">
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <div className="bg-coveo-blue/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-2">
-                            {product.icon}
-                          </div>
-                          <CardTitle>{product.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm">{product.description}</p>
-                        </CardContent>
-                        <CardFooter>
-                          <Button variant="outline" size="sm" className="w-full">Learn More</Button>
-                        </CardFooter>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+            
+            {products.map((product, index) => (
+              <ProductDetail
+                key={index}
+                id={product.productId}
+                icon={product.icon}
+                title={product.title}
+                description={product.description}
+                features={product.features}
+                benefits={product.benefits}
+                price={product.price}
+                useCase={product.useCase}
+              />
+            ))}
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="compare" className="animate-fade-in">
+          <Card>
+            <CardHeader>
+              <CardTitle>Product Comparison</CardTitle>
+              <CardDescription>
+                Compare features across our product offerings to find the right solution for your needs.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ComparisonTable products={comparisonData} />
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button onClick={handlePricingClick} className="bg-coveo-blue hover:bg-coveo-blue/90">
+                View Pricing
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="showcase" className="animate-fade-in py-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Product Showcase</CardTitle>
+              <CardDescription>
+                Explore our products through interactive demos and case studies.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {products.map((product, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="p-1">
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <div className="bg-coveo-blue/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-2">
+                              {product.icon}
+                            </div>
+                            <CardTitle>{product.title}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-sm">{product.description}</p>
+                          </CardContent>
+                          <CardFooter>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="w-full"
+                              onClick={() => {
+                                setActiveTab("products");
+                                setTimeout(() => {
+                                  document.getElementById(product.productId)?.scrollIntoView({ behavior: 'smooth' });
+                                }, 100);
+                              }}
+                            >
+                              Learn More
+                            </Button>
+                          </CardFooter>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </>
   );
 };
 
