@@ -10,12 +10,12 @@ const Hero = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Set animation visibility after a short delay
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
+    // Set animation visibility immediately to prevent disappearing
+    setIsVisible(true);
     
-    return () => clearTimeout(timer);
+    return () => {
+      // No need to set to false on cleanup as it can cause flicker
+    };
   }, []);
 
   const handleBookDemo = () => {
@@ -44,11 +44,11 @@ const Hero = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <span className={`inline-block mb-4 px-4 py-1.5 bg-coveo-gray text-coveo-blue text-sm font-medium rounded-full opacity-0 ${isVisible ? 'animate-fade-in' : ''}`}>
+            <span className={`inline-block mb-4 px-4 py-1.5 bg-coveo-gray text-coveo-blue text-sm font-medium rounded-full ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
               Revolutionizing Digital Experiences
             </span>
             
-            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance mb-6 opacity-0 ${isVisible ? 'animate-fade-in animate-delay-200' : ''}`}>
+            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance mb-6 ${isVisible ? 'animate-fade-in animate-delay-200' : 'opacity-0'}`}>
               Transform How People
               <span className="text-coveo-blue relative inline-block mx-2">
                 Discover
@@ -59,11 +59,11 @@ const Hero = () => {
               Information
             </h1>
             
-            <p className={`text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 opacity-0 ${isVisible ? 'animate-fade-in animate-delay-300' : ''}`}>
+            <p className={`text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 ${isVisible ? 'animate-fade-in animate-delay-300' : 'opacity-0'}`}>
               Harness the power of AI to deliver relevant content, product recommendations, and support to every customer and employee, in every digital experience.
             </p>
             
-            <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 ${isVisible ? 'animate-fade-in animate-delay-400' : ''}`}>
+            <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isVisible ? 'animate-fade-in animate-delay-400' : 'opacity-0'}`}>
               <Button 
                 size="lg" 
                 className="btn-hover bg-coveo-blue hover:bg-coveo-blue/90 w-full sm:w-auto"
@@ -84,7 +84,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={`relative mt-12 mb-8 rounded-xl overflow-hidden shadow-2xl opacity-0 ${isVisible ? 'animate-fade-in animate-delay-500' : ''}`}>
+          <div className={`relative mt-12 mb-8 rounded-xl overflow-hidden shadow-2xl ${isVisible ? 'animate-fade-in animate-delay-500' : 'opacity-0'}`}>
             <img 
               src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop&q=80&ixlib=rb-4.0.3" 
               alt="Coveo Platform Dashboard" 
@@ -103,7 +103,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={`mt-10 opacity-0 ${isVisible ? 'animate-fade-in animate-delay-600' : ''}`}>
+          <div className={`mt-10 ${isVisible ? 'animate-fade-in animate-delay-600' : 'opacity-0'}`}>
             <p className="text-sm text-muted-foreground mb-4">Trusted by industry leaders worldwide</p>
             <div className="flex flex-wrap justify-center gap-6 md:gap-10">
               {/* Logo placeholders */}
@@ -115,7 +115,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className={`flex justify-center mt-16 animate-bounce opacity-0 ${isVisible ? 'animate-fade-in animate-delay-700' : ''}`}>
+          <div className={`flex justify-center mt-16 animate-bounce ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <Button 
               variant="ghost" 
               size="sm" 

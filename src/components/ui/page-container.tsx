@@ -12,10 +12,11 @@ const PageContainer = ({ children, fullWidth = false }: PageContainerProps) => {
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
+    // Set mounted to true immediately when component mounts
     setMounted(true);
-    return () => {
-      setMounted(false);
-    };
+    
+    // No need to set mounted to false on unmount as it can cause flickering
+    // when transitioning between pages
   }, []);
 
   return (
