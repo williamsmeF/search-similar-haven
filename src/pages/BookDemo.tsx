@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageContainer from "@/components/ui/page-container";
 
 const demoSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -72,9 +70,8 @@ const BookDemo = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex-1 bg-coveo-lightGray py-16">
+    <PageContainer>
+      <div className="flex-1 bg-coveo-blue/5 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
             <div className="mb-8 text-center">
@@ -355,8 +352,7 @@ const BookDemo = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </PageContainer>
   );
 };
 
