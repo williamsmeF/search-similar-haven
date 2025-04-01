@@ -1,16 +1,16 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { v4 as uuidv4 } from "@supabase/supabase-js/dist/main/lib/helpers";
+import { randomUUID } from "crypto";
 
 export interface Booking {
   id: string;
   user_id: string;
   name: string;
   email: string;
-  company?: string;
+  company?: string | null;
   booking_date: string;
-  message?: string;
-  status: 'pending' | 'confirmed' | 'canceled';
+  message?: string | null;
+  status: string; // Changed from union type to string to match DB
   created_at: string;
   updated_at: string;
 }
@@ -30,7 +30,7 @@ export const bookingService = {
       throw new Error("User not authenticated");
     }
     
-    const bookingId = `DEMO-${uuidv4().slice(0, 8).toUpperCase()}`;
+    const bookingId = `DEMO-${randomUUID().slice(0, 8).toUpperCase()}`;
     
     const { data: booking, error } = await supabase
       .from('bookings')
@@ -71,7 +71,7 @@ export const bookingService = {
     return data;
   },
   
-  async updateBookingStatus(id: string, status: 'pending' | 'confirmed' | 'canceled') {
+  async updateBookingStatus(id: string, status: string) {
     const { data, error } = await supabase
       .from('bookings')
       .update({ status, updated_at: new Date().toISOString() })

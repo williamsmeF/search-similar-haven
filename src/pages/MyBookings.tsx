@@ -53,7 +53,7 @@ const MyBookings = () => {
     }
   };
 
-  const filteredBookings = bookings.filter((booking: Booking) => 
+  const filteredBookings = bookings.filter((booking: any) => 
     booking.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
     booking.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     booking.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -95,7 +95,7 @@ const MyBookings = () => {
         <>
           {filteredBookings.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filteredBookings.map((booking: Booking) => (
+              {filteredBookings.map((booking: any) => (
                 <div key={booking.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                   <div className="flex justify-between items-start mb-4">
                     <div>
