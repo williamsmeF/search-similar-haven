@@ -11,6 +11,7 @@ import BlogSection from "@/components/BlogSection";
 import Newsletter from "@/components/Newsletter";
 import CTA from "@/components/CTA";
 import ScrollToTop from "@/components/ScrollToTop";
+import ChatBox from "@/components/ChatBox";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -68,6 +69,7 @@ const Index = () => {
       <Newsletter />
       <CTA />
       <ScrollToTop />
+      <ChatBox />
     </PageContainer>
   );
 };
