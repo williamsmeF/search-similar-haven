@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,9 +8,8 @@ import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "sonner";
 import PageContainer from "@/components/ui/page-container";
+import { useAuth } from "@/context/AuthContext";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -26,7 +26,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
+  const { signUp, isLoading } = useAuth();
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -38,10 +38,13 @@ const Signup = () => {
     },
   });
 
-  const onSubmit = (data: SignupFormValues) => {
-    // For demo purposes, we're just going to simulate a successful signup
-    toast.success("Account created successfully!");
-    navigate("/profile");
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      await signUp(data.email, data.password, { name: data.name });
+    } catch (error) {
+      // Error is handled in the auth context
+      console.error("Signup error:", error);
+    }
   };
 
   return (
@@ -173,7 +176,11 @@ const Signup = () => {
               <Button
                 type="submit"
                 className="w-full bg-coveo-blue hover:bg-coveo-blue/90"
+                disabled={isLoading}
               >
+                {isLoading ? (
+                  <div className="w-5 h-5 border-2 border-t-white border-white/30 rounded-full animate-spin mr-2"></div>
+                ) : null}
                 Create account
               </Button>
             </form>

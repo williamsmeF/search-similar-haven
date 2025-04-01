@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import PageContainer from "@/components/ui/page-container";
+import { useAuth } from "@/context/AuthContext";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -19,7 +21,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const { signIn, isLoading } = useAuth();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -29,10 +31,13 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormValues) => {
-    // For demo purposes, we're just going to simulate a successful login
-    toast.success("Successfully logged in!");
-    navigate("/profile");
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      await signIn(data.email, data.password);
+    } catch (error) {
+      // Error is handled in the auth context
+      console.error("Login error:", error);
+    }
   };
 
   return (
@@ -126,7 +131,11 @@ const Login = () => {
               <Button
                 type="submit"
                 className="w-full bg-coveo-blue hover:bg-coveo-blue/90"
+                disabled={isLoading}
               >
+                {isLoading ? (
+                  <div className="w-5 h-5 border-2 border-t-white border-white/30 rounded-full animate-spin mr-2"></div>
+                ) : null}
                 Sign in
               </Button>
             </form>

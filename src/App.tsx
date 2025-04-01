@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/context/AuthContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -20,6 +21,7 @@ import Products from "./pages/Products";
 import Pricing from "./pages/Pricing";
 import Company from "./pages/Company";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -29,25 +31,30 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/book-demo" element={<BookDemo />} />
-          <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-          <Route path="/my-bookings" element={<MyBookings />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/company" element={<Company />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/company" element={<Company />} />
+            
+            {/* Protected routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+            <Route path="/book-demo" element={<ProtectedRoute><BookDemo /></ProtectedRoute>} />
+            <Route path="/booking-confirmation" element={<ProtectedRoute><BookingConfirmation /></ProtectedRoute>} />
+            <Route path="/my-bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
+            <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
