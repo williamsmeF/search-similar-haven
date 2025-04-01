@@ -46,16 +46,10 @@ const Resources = () => {
   const filteredResources = filterResources();
 
   // Group resources by category for the categories tab
-  const resourcesByCategory: Record<ResourceCategory, Resource[]> = {
-    "Product": [],
-    "Industry": [],
-    "Technical": [],
-    "Customer Story": []
-  };
-
-  resourcesData.forEach(resource => {
-    resourcesByCategory[resource.category].push(resource);
-  });
+  const resourcesByCategory = resourceCategories.reduce((acc, category) => {
+    acc[category] = resourcesData.filter(resource => resource.category === category);
+    return acc;
+  }, {} as Record<ResourceCategory, Resource[]>);
   
   return (
     <PageContainer fullWidth>
@@ -140,7 +134,7 @@ const Resources = () => {
                   </p>
                 </div>
                 <div className="lg:w-1/3 flex justify-center lg:justify-end">
-                  <Button size="lg" className="bg-coveo-blue hover:bg-coveo-blue/90">
+                  <Button size="lg" className="bg-gradient-to-r from-[#30e8bf] to-[#ff8235] hover:opacity-90 text-white">
                     Subscribe to Updates
                   </Button>
                 </div>
