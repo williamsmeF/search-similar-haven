@@ -1,6 +1,14 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { randomUUID } from "crypto";
+
+// Browser-compatible UUID function
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 export interface Booking {
   id: string;
@@ -30,7 +38,7 @@ export const bookingService = {
       throw new Error("User not authenticated");
     }
     
-    const bookingId = `DEMO-${randomUUID().slice(0, 8).toUpperCase()}`;
+    const bookingId = `DEMO-${generateUUID().slice(0, 8).toUpperCase()}`;
     
     const { data: booking, error } = await supabase
       .from('bookings')
