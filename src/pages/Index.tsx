@@ -52,6 +52,21 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, [toast]);
 
+  // Initialize the chat with Coveo information
+  useEffect(() => {
+    // Add Coveo information to the chat window
+    window.chatboxConfig = {
+      knowledgeBase: [
+        "Coveo is an enterprise AI search company that helps businesses deliver relevant digital experiences.",
+        "Coveo's AI-powered platform unifies content from various sources and personalizes interactions.",
+        "Key products include Search, Commerce, Service, and the Coveo Platform.",
+        "Coveo serves industries including Retail, Financial Services, Technology, and Healthcare.",
+        "The company was founded in 2005 and is headquartered in Quebec City, Canada.",
+        "Coveo's solutions help increase conversions, improve self-service, and enhance customer satisfaction."
+      ]
+    };
+  }, []);
+
   return (
     <PageContainer fullWidth>
       <Hero />

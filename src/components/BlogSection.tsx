@@ -21,7 +21,7 @@ const blogPosts = [
     excerpt: "Learn how leading retailers are using AI-powered recommendations to increase conversion rates.",
     category: "Commerce",
     date: "April 27, 2023",
-    imageUrl: "https://images.unsplash.com/photo-1661347333292-b85d6c1af3c3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    imageUrl: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
     url: "/resources#blog2"
   },
   {
